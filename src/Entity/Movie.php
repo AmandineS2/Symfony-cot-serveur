@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 #[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 class Movie
 {
     #[ORM\Id]
