@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 
 use App\Repository\ActorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,6 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiResource]
 #[ApiFilter(SearchFilter::class, properties: ['lastname' => 'partial','firstname'=> 'partial', 'movies.title'=>'partial'])]
 #[ApiFilter(DateFilter::class, properties: ['date'])]
+#[ApiFilter(OrderFilter::class, properties: ['lastname' => 'ASC', 'firstname' => 'ASC','date'=>'ASC'])]
 class Actor
 {
     #[ORM\Id]
