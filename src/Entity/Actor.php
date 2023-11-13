@@ -51,14 +51,14 @@ class Actor
         return $this->id;
     }
 
-    public function getLastnam(): ?string
+    public function getLastname(): ?string
     {
-        return $this->lastnam;
+        return $this->lastname;
     }
 
-    public function setLastnam(string $lastnam): static
+    public function setLastname(string $lastname): static
     {
-        $this->lastnam = $lastnam;
+        $this->lastname = $lastname;
 
         return $this;
     }
