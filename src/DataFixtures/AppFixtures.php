@@ -6,6 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
 use App\Entity\Actor;
+use App\Entity\Movie;
 use DateTimeImmutable;
 
 use phpDocumentor\Reflection\Types\Null_;
@@ -32,5 +33,19 @@ class AppFixtures extends Fixture
         $actor->setCreatedAt(new \DateTimeImmutable());
         $manager->persist($actor);
         $manager->flush();
+        
     }
+
+   
+
+  //  $faker = \Faker\Factory::create();
+  //  $faker->addProvider(new \Xylis\FakerCinema\Provider\Movie($faker));
+
+   // $Movie = 
+
+
+
+
+  
+
 }
