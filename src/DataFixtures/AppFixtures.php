@@ -27,8 +27,8 @@ class AppFixtures extends Fixture
         $lastname = $fullnameExploded[1];
     }
         $actor = new Actor();
-        $actor->setLastname('Isle');
-        $actor->setFirstname('Death');
+        $actor->setLastname('Shadow');
+        $actor->setFirstname('Mira');
 		$actor->setDate(new \DateTime());
         $actor->setCreatedAt(new \DateTimeImmutable());
         $manager->persist($actor);
