@@ -25,14 +25,16 @@ class AppFixtures extends Fixture
         $fullnameExploded = explode(' ', $fullname);
         $firstname = $fullnameExploded[0];
         $lastname = $fullnameExploded[1];
-    }
+
         $actor = new Actor();
-        $actor->setLastname('Shadow');
-        $actor->setFirstname('Mira');
+        $actor->setLastname($lastname);
+        $actor->setFirstname($firstname);
 		$actor->setDate(new \DateTime());
         $actor->setCreatedAt(new \DateTimeImmutable());
         $manager->persist($actor);
         $manager->flush();
+    }
+        
         
     }
 

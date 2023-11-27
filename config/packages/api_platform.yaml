@@ -3,12 +3,21 @@ api_platform:
     version: 1.0.0
     # Good defaults for REST APIs
     defaults:
+        pagination_items_per_page: 5
+        
         stateless: true
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
         extra_properties:
             standard_put: true
+        pagination :
+        page_parameter_name: 1
+        items_per_page_parameter_name: 10
             
         api_platform:
+        
+        
     graphql:
         enabled: true
+    
+     
