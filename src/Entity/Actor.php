@@ -15,7 +15,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ActorRepository::class)]
-#[ApiResource]
+#[ApiResource(paginationType: 'page')]
 #[ApiFilter(SearchFilter::class, properties: ['lastname' => 'partial','firstname'=> 'partial', 'movies.title'=>'partial'])]
 #[ApiFilter(DateFilter::class, properties: ['date'])]
 #[ApiFilter(OrderFilter::class, properties: ['lastname' => 'ASC', 'firstname' => 'ASC','date'=>'ASC'])]
