@@ -13,9 +13,24 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 
 #[ORM\Entity(repositoryClass: ActorRepository::class)]
-#[ApiResource(paginationType: 'page')]
+#[ApiResource(security: "is_granted('ROLE_USER')")]
+/**
+ * Secured resource.
+*#[Get]
+*#[Put(security: "is_granted('ROLE_ADMIN') or object.owner == user")]
+*#[GetCollection]
+*#[Post(security: "is_granted('ROLE_ADMIN')")]
+ */
+#[ApiResource(security: "is_granted('ROLE_USER')")]
+
 #[ApiFilter(SearchFilter::class, properties: ['lastname' => 'partial','firstname'=> 'partial', 'movies.title'=>'partial'])]
 #[ApiFilter(DateFilter::class, properties: ['date'])]
 #[ApiFilter(OrderFilter::class, properties: ['lastname' => 'ASC', 'firstname' => 'ASC','date'=>'ASC'])]
