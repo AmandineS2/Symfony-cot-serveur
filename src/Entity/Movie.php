@@ -50,9 +50,13 @@ class Movie
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $website = null;
 
+    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'relation')]
+    private Collection $categories;
+
     public function __construct()
     {
         $this->actor = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,6 +192,33 @@ class Movie
     public function setWebsite(?string $website): static
     {
         $this->website = $website;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+            $category->addRelation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): static
+    {
+        if ($this->categories->removeElement($category)) {
+            $category->removeRelation($this);
+        }
 
         return $this;
     }
