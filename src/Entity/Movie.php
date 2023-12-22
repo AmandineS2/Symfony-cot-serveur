@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+
 use App\Repository\MovieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
@@ -31,13 +35,15 @@ class Movie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    public ?MediaObject $image = null;
 
+    private ?int $id = null;
+    
     #[ORM\Column(length: 255)]
     
     private ?string $title = null;
 
-    #[ORM\ManyToMany(targetEntity: actor::class, inversedBy: 'movies')]
+    #[ORM\ManyToMany(targetEntity: Actor::class, inversedBy: 'movies')]
     private Collection $actor;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -62,6 +68,7 @@ class Movie
     private ?string $director = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Url(message: 'The url {{ value }} is not a valid url ragequit')]
     private ?string $website = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'relation')]

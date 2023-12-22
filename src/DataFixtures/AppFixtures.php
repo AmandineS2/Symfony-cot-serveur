@@ -8,6 +8,7 @@ use Faker;
 use App\Entity\Actor;
 use App\Entity\Movie;
 use DateTimeImmutable;
+use App\Entity\User;
 
 use phpDocumentor\Reflection\Types\Null_;
 
@@ -26,15 +27,29 @@ class AppFixtures extends Fixture
         $firstname = $fullnameExploded[0];
         $lastname = $fullnameExploded[1];
 
+        for($i =0; $i<5; $i++) {
+            $movie = new Movie();
+            $movie
+                ->setTitle("Mon film ($i)")
+                ->setDescription("ma description")
+                ->setDirector("toto")
+                ->setReleaseDate(new \DateTime())
+            ;
+            $manager->persist($movie);
+        
+        }
+
         $actor = new Actor();
         $actor->setLastname($lastname);
         $actor->setFirstname($firstname);
 		$actor->setDate(new \DateTime());
         $actor->setCreatedAt(new \DateTimeImmutable());
+        $actor->setNationality('Germany');
         $manager->persist($actor);
         $manager->flush();
     }
-        
+
+    
         
     }
 
@@ -43,7 +58,7 @@ class AppFixtures extends Fixture
   //  $faker = \Faker\Factory::create();
   //  $faker->addProvider(new \Xylis\FakerCinema\Provider\Movie($faker));
 
-   // $Movie = 
+  
 
 
 
