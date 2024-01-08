@@ -35,16 +35,12 @@ class Movie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    public ?MediaObject $image = null;
-
     private ?int $id = null;
     
     #[ORM\Column(length: 255)]
     
     private ?string $title = null;
 
-    #[ORM\ManyToMany(targetEntity: Actor::class, inversedBy: 'movies')]
-    private Collection $actor;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $release_date = null;
@@ -71,13 +67,16 @@ class Movie
     #[Assert\Url(message: 'The url {{ value }} is not a valid url ragequit')]
     private ?string $website = null;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'relation')]
+    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'movies', cascade:['persist'] )]
     private Collection $categories;
+
+    #[ORM\ManyToMany(targetEntity: Actor::class, inversedBy: 'movies')]
+    private Collection $actors;
 
     public function __construct()
     {
-        $this->actor = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->actors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,29 +96,6 @@ class Movie
         return $this;
     }
 
-    /**
-     * @return Collection<int, actor>
-     */
-    public function getActor(): Collection
-    {
-        return $this->actor;
-    }
-
-    public function addActor(actor $actor): static
-    {
-        if (!$this->actor->contains($actor)) {
-            $this->actor->add($actor);
-        }
-
-        return $this;
-    }
-
-    public function removeActor(actor $actor): static
-    {
-        $this->actor->removeElement($actor);
-
-        return $this;
-    }
 
     public function getReleaseDate(): ?\DateTimeInterface
     {
@@ -218,29 +194,28 @@ class Movie
     }
 
     /**
-     * @return Collection<int, Category>
+     * @return Collection<int, Actor>
      */
-    public function getCategories(): Collection
+    public function getActors(): Collection
     {
-        return $this->categories;
+        return $this->actors;
     }
 
-    public function addCategory(Category $category): static
+    public function addActor(Actor $actor): static
     {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-            $category->addRelation($this);
+        if (!$this->actors->contains($actor)) {
+            $this->actors->add($actor);
         }
 
         return $this;
     }
 
-    public function removeCategory(Category $category): static
+    public function removeActor(Actor $actor): static
     {
-        if ($this->categories->removeElement($category)) {
-            $category->removeRelation($this);
-        }
+        $this->actors->removeElement($actor);
 
         return $this;
     }
+
+    
 }

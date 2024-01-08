@@ -53,14 +53,14 @@ class Actor
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\ManyToMany(targetEntity: Movie::class, mappedBy: 'actor')]
-    private Collection $movies;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $reward = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nationality = null;
+
+    #[ORM\ManyToMany(targetEntity: Movie::class, mappedBy: 'actors')]
+    private Collection $movies;
 
     public function __construct()
     {
@@ -120,6 +120,31 @@ class Actor
         return $this;
     }
 
+
+    public function getReward(): ?string
+    {
+        return $this->reward;
+    }
+
+    public function setReward(?string $reward): static
+    {
+        $this->reward = $reward;
+
+        return $this;
+    }
+
+    public function getNationality(): ?string
+    {
+        return $this->nationality;
+    }
+
+    public function setNationality(string $nationality): static
+    {
+        $this->nationality = $nationality;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Movie>
      */
@@ -143,30 +168,6 @@ class Actor
         if ($this->movies->removeElement($movie)) {
             $movie->removeActor($this);
         }
-
-        return $this;
-    }
-
-    public function getReward(): ?string
-    {
-        return $this->reward;
-    }
-
-    public function setReward(?string $reward): static
-    {
-        $this->reward = $reward;
-
-        return $this;
-    }
-
-    public function getNationality(): ?string
-    {
-        return $this->nationality;
-    }
-
-    public function setNationality(string $nationality): static
-    {
-        $this->nationality = $nationality;
 
         return $this;
     }
