@@ -41,12 +41,20 @@ class AppFixtures extends Fixture
 
         $faker->addProvider(new \Xylis\FakerCinema\Provider\Movie($faker));
         $movies = $faker->movies(100);
+        $entries = $faker->numberBetween(1000, 1000000); 
+        $budget = $faker->numberBetween(100000, 10000000);
+        $duration = $faker->numberBetween(60, 180, 500);
+        $note = $faker->randomFloat(1, 10, 20);
         foreach ($movies as $item) {
             $movie = new Movie();
             $movie->setTitle($item);
             $movie->setReleaseDate(new DateTimeImmutable());
             $movie->setDescription("la description");
             $movie->setDirector("nul");
+            $movie->setEntries($entries);
+            $movie->setBudget($budget);
+            $movie->setDuration($duration);
+            $movie->setNote($note);
            
 
             shuffle($createdActors);
