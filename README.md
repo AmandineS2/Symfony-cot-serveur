@@ -1,6 +1,6 @@
 Bienvenue sur mon projet symfony en back-end. 
 
-Ici, je vais vous expliquer comment j'ai créer une API en symfony. 
+Ici, je vais vous expliquer comment j'ai crée une API en symfony. 
 
 Tout d'abord il faut installer Symfony via Composer, cependant il vous faudra installer composer si vous ne l'avait pas déjà.
 
