@@ -25,9 +25,13 @@ class Category
     #[ORM\ManyToMany(targetEntity: MediaObject::class, inversedBy: 'categories')]
     private Collection $media;
 
+    #[ORM\ManyToMany(targetEntity: Movie::class, mappedBy: 'Categories')]
+    private Collection $movies;
+
     public function __construct()
     {
         $this->media = new ArrayCollection();
+        $this->movies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,6 +71,33 @@ class Category
     public function removeMedium(MediaObject $medium): static
     {
         $this->media->removeElement($medium);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Movie>
+     */
+    public function getMovies(): Collection
+    {
+        return $this->movies;
+    }
+
+    public function addMovie(Movie $movie): static
+    {
+        if (!$this->movies->contains($movie)) {
+            $this->movies->add($movie);
+            $movie->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMovie(Movie $movie): static
+    {
+        if ($this->movies->removeElement($movie)) {
+            $movie->removeCategory($this);
+        }
 
         return $this;
     }

@@ -8,6 +8,7 @@ use Faker;
 use DateTimeImmutable;
 use App\Entity\Actor;
 use App\Entity\Movie;
+use App\Entity\Category;
 
 class AppFixtures extends Fixture
 {
@@ -39,6 +40,20 @@ class AppFixtures extends Fixture
             $manager->persist($actor);
         }
 
+        $categories = ['Action', 'Comédie', 'Drame', 'Horreur', 'Science-fiction'];
+        foreach ($categories as $item){
+            $category = new Category();
+            $category->setName($item);
+
+            shuffle($createdMovies);
+            $createdMoviesSliced = array_slice($createdMovies, 0, 5);
+            foreach ($createdMoviesSliced as $movie){
+                $category->addMovie($movie);
+            }
+
+            $manager->persist($category);
+        }
+
         $faker->addProvider(new \Xylis\FakerCinema\Provider\Movie($faker));
         $movies = $faker->movies(100);
         $entries = $faker->numberBetween(1000, 1000000); 
@@ -55,13 +70,17 @@ class AppFixtures extends Fixture
             $movie->setBudget($budget);
             $movie->setDuration($duration);
             $movie->setNote($note);
+            
            
 
             shuffle($createdActors);
             $createdActorsSliced = array_slice($createdActors, 0, 4);
             foreach ($createdActorsSliced as $actor) {
                 $movie->addActor($actor);
+
             }
+
+            
             $manager->persist($movie);
         }
 
