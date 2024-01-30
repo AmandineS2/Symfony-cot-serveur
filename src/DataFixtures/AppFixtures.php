@@ -40,19 +40,7 @@ class AppFixtures extends Fixture
             $manager->persist($actor);
         }
 
-        $categories = ['Action', 'Comédie', 'Drame', 'Horreur', 'Science-fiction'];
-        foreach ($categories as $item){
-            $category = new Category();
-            $category->setName($item);
 
-            shuffle($createdMovies);
-            $createdMoviesSliced = array_slice($createdMovies, 0, 5);
-            foreach ($createdMoviesSliced as $movie){
-                $category->addMovie($movie);
-            }
-
-            $manager->persist($category);
-        }
 
         $faker->addProvider(new \Xylis\FakerCinema\Provider\Movie($faker));
         $movies = $faker->movies(100);
@@ -80,8 +68,23 @@ class AppFixtures extends Fixture
 
             }
 
+            $createdMovies[] =$movie;
             
             $manager->persist($movie);
+        }
+
+        $categories = ['Action', 'Comédie', 'Drame', 'Horreur', 'Science-fiction'];
+        foreach ($categories as $item){
+            $category = new Category();
+            $category->setName($item);
+
+            shuffle($createdMovies);
+            $createdMoviesSliced = array_slice($createdMovies, 0, 5);
+            foreach ($createdMoviesSliced as $movie){
+                $category->addMovie($movie);
+            }
+
+            $manager->persist($category);
         }
 
 
