@@ -8,6 +8,6 @@ Voici le lien vers le site officiel de Symfony :  https://symfony.com/doc/curren
 
 composer create-project symfony/skeleton:"6.3.*" my_project_directory (Vous pouvez changer le "my_project_directory" par le nom de votre projet)
 
-cd my_project_directory
+~cd my_project_directory~
 
 composer require webapp
