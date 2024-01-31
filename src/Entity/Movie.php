@@ -67,8 +67,6 @@ class Movie
     #[Assert\Url(message: 'The url {{ value }} is not a valid url ragequit')]
     private ?string $website = null;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'movies', cascade:['persist'] )]
-    private Collection $categories;
 
     #[ORM\ManyToMany(targetEntity: Actor::class, inversedBy: 'movies')]
     private Collection $actors;
@@ -78,7 +76,6 @@ class Movie
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
         $this->actors = new ArrayCollection();
         $this->media = new ArrayCollection();
     }
@@ -245,30 +242,4 @@ class Movie
         return $this;
     }
 
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(Category $category): static
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-            $category->addMovie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): static
-    {
-        if ($this->categories->removeElement($category)) {
-            $category->removeMovie($this);
-        }
-
-        return $this;
-    }
 }

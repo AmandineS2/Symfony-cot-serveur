@@ -25,7 +25,7 @@ class Category
     #[ORM\ManyToMany(targetEntity: MediaObject::class, inversedBy: 'categories')]
     private Collection $media;
 
-    #[ORM\ManyToMany(targetEntity: Movie::class, mappedBy: 'Categories')]
+    #[ORM\ManyToMany(targetEntity: Movie::class, mappedBy: 'categories')]
     private Collection $movies;
 
     public function __construct()
